@@ -3,17 +3,19 @@
 import socket
 import os
 from _thread import *
+import sys
 
-ServerSocket = socket.socket()
-host = '192.168.50.40'
-port = 65432
-ThreadCount = 0     # niet meer gebruikt
+serverSocket = socket.socket()
+host = '127.0.0.1'
+port = 12345
+
 try:
-    ServerSocket.bind((host, port))
+    serverSocket.bind((host, port))
 except socket.error as e:
-    ServerSocket.close()
-    # print(str(e))
-
+    print(f'Error when doing ServerSocket.bind {e}')
+    serverSocket.close()
+    sys.exit()
+    
 print('Waitiing for a Connection..')
 ServerSocket.listen(5)
 
@@ -28,20 +30,17 @@ def threaded_client(connection,CLIENTHOST):
         #connection.sendall(str.encode(reply))
         # bestand file2 is tav logging
         if data:
-               file = open("file2","a+")
-               file.write(str(data))
-               file.write('\n')
-               file.close()
-               reply = 'ontvangen: ' + str(data)
-               connection.sendall(str.encode(reply))
-
+            reply = 'received OK: ' + str(data)
+            connection.sendall(str.encode(reply))
+        else:
+            break
     connection.close()
 
 while True:
-    Client, address = ServerSocket.accept()
+    Client, address = serverSocket.accept()
     print('Connected from: ' + address[0] + ':' + str(address[1]))
     wie=address[0] + ':' + str(address[1])
     start_new_thread(threaded_client, (Client,wie))
     # ThreadCount += 1
     # print('(while True: Thread Number: ' + str(ThreadCount))
-ServerSocket.close()
+serverSocket.close()

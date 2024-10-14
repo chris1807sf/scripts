@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import socket
-import os
+#import os
 from _thread import *
 import sys
 
@@ -17,7 +17,7 @@ except socket.error as e:
     sys.exit()
     
 print('Waitiing for a Connection..')
-ServerSocket.listen(5)
+serverSocket.listen(5)
 
 
 def threaded_client(connection,CLIENTHOST):

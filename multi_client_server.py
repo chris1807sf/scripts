@@ -30,17 +30,18 @@ def threaded_client(connection,CLIENTHOST):
     connection.send(str.encode('Welcome ' +  CLIENTHOST+ ' on Server ' + host + '\n'))
     while True:
         data = connection.recv(2048)
-        data = data.decode('utf-8')
+        data = data.decode('utf-8').rstrip()
         # reply = 'Server Says: ' + data.decode('utf-8')
         # if not data: break
         #connection.sendall(str.encode(reply))
         # bestand file2 is tav logging
         if data:
+            print(f'threadcount: {threadcount}, data: +++{data}+++')
             if data=="close":
                 reply = 'bye'
-                print(f"threadcount: {threadcount}: bye")
+                print(f"threadcount: {threadcount}: reply=bye")
                 threadcount-=1
-                print(f"threadcount: {threadcount}")
+                print(f"updated threadcount: {threadcount}")
             else:
                 reply = 'received OK: ' + str(data)
             connection.sendall(str.encode(reply))

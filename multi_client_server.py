@@ -9,6 +9,8 @@ serverSocket = socket.socket()
 host = '127.0.0.1'
 port = 12345
 
+threadcount = 0;
+
 try:
     serverSocket.bind((host, port))
 except socket.error as e:
@@ -21,6 +23,9 @@ serverSocket.listen(5)
 
 
 def threaded_client(connection,CLIENTHOST):
+    threadcount+=1
+    print(f"threadcount: {threadcount}")
+
     connection.send(str.encode('Welcome ' +  CLIENTHOST+ ' on Server ' + host + '\n'))
     while True:
         data = connection.recv(2048)
@@ -30,7 +35,10 @@ def threaded_client(connection,CLIENTHOST):
         #connection.sendall(str.encode(reply))
         # bestand file2 is tav logging
         if data:
-            reply = 'received OK: ' + str(data)
+            if data=="close":
+                reply = 'bye'
+            else:
+                reply = 'received OK: ' + str(data)
             connection.sendall(str.encode(reply))
         else:
             break

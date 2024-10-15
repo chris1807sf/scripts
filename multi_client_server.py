@@ -44,7 +44,7 @@ def threaded_client(connection,CLIENTHOST):
                 print(f"updated threadcount: {threadcount}")
             else:
                 reply = 'received OK: ' + str(data)
-            connection.sendall(str.encode(reply))
+            connection.send(str.encode(reply))
         else:
             break
     connection.close()

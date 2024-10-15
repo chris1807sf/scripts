@@ -23,6 +23,7 @@ serverSocket.listen(5)
 
 
 def threaded_client(connection,CLIENTHOST):
+    global threadcount
     threadcount+=1
     print(f"threadcount: {threadcount}")
 
@@ -37,6 +38,9 @@ def threaded_client(connection,CLIENTHOST):
         if data:
             if data=="close":
                 reply = 'bye'
+                print(f"threadcount: {threadcount}: bye")
+                threadcount-=1
+                print(f"threadcount: {threadcount}")
             else:
                 reply = 'received OK: ' + str(data)
             connection.sendall(str.encode(reply))

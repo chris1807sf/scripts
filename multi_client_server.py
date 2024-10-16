@@ -54,6 +54,9 @@ while True:
     print('Connected from: ' + address[0] + ':' + str(address[1]))
     wie=address[0] + ':' + str(address[1])
     start_new_thread(threaded_client, (Client,wie))
-    # ThreadCount += 1
-    # print('(while True: Thread Number: ' + str(ThreadCount))
+    if threadcount>=3:
+        print(f'threadcount: {threadcount} >=3, Will break')
+        break
+    
+print(f'will -do serverSocket.close()')
 serverSocket.close()

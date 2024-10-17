@@ -16,7 +16,7 @@ print ("socket is listening")
 
 while True: 
   # Establish connection with client. 
-  conn, addr = s.accept()	 
+  conn, addr = server.accept()	 
   print ('Got connection from', addr )
   datagram = conn.recv(1024)
   if datagram:

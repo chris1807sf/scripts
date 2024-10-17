@@ -22,10 +22,7 @@ while True:
   if datagram:
     tokens = datagram.strip().split()
     if tokens[0].lower() == "post":
-      flist.append(tokens[1])
       conn.send(len(tokens) + "")
-    else if tokens[0].lower() == "get":
-      conn.send(tokens.popleft())
     else:
       conn.send("-1")
     conn.close()

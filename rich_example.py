@@ -31,5 +31,6 @@ import sys
 from rich import print
 from rich.columns import Columns
 
+#show files of dir in columns
 directory = os.listdir(sys.argv[1])
 print(Columns(directory))

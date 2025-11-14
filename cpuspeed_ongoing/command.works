@@ -1,0 +1,1 @@
+cat /proc/cpuinfo|grep MHz| awk -F ':' '{ sum += \$2 } END { printf(\"Average %.2f MHz\n\", sum/NR) }'

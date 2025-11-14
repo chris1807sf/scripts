@@ -1,0 +1,3 @@
+https://www.geeksforgeeks.org/how-to-impose-high-cpu-load-and-stress-test-on-linux-using-stress-ng-tool/
+###
+stress-ng --cpu 0 --timeout 10s

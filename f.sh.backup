@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# start firefox from the cmd to do a google search
+echo -e "search: $1"
+firefox https://google.com/search?q=$1

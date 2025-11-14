@@ -1,0 +1,8 @@
+tar -czvf projects.tar.gz ./projects/
+https://www.cyberciti.biz/faq/how-to-create-tar-gz-file-in-linux-using-command-line/
+
+#get a list of all the files in the tar
+tar -tvf file.tar.gz
+
+#to extact a .gz.tar file
+tar xvf file.tar.gz

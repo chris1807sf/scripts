@@ -1,0 +1,4 @@
+# kill a list of processes. In this example processes contaning " watch -n " (except for the ps process itself ...)
+# the 'grep -v " --color"' removes the pid of the grep process itsel
+# the "awk '{print $2}'" takes the second field = PID, field-delimiter is <space> [alternative: use to define the field delimitor: -F ' ' ]
+for pid in $(ps -ef | grep " watch -n " | grep -v " --color"| awk '{print $2}'); do kill -9 $pid; done

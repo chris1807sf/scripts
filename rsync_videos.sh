@@ -23,6 +23,7 @@ HOSTNAME_THINKPAD="chris-thinkpad"
 HOSTNAME_ELITEDESK="chris-elitedesk"
 HOSTNAME_G5="chris-g5"
 HOSTNAME_L15="l15"
+HOSTNAME_P520C="p520c"
 
 #dirs and files to use
 SOURCE_DIR="/home/chris/Videos/" #slash needed at the end "all content of ../xxx/ dir"
@@ -32,6 +33,7 @@ DEFAULT_TARGET_DIR_FOR_THINKPAD="/media/chris/T9/media/movies"
 DEFAULT_TARGET_DIR_FOR_ELITEDESK="/media/chris/T9/media/from_elitedesk"
 DEFAULT_TARGET_DIR_FOR_G5="/media/chris/T9/media/from_g5"
 DEFAULT_TARGET_DIR_FOR_L15="/media/chris/T9/media/from_l15"
+DEFAULT_TARGET_DIR_FOR_P520C="/media/chris/T9/media/from_p520c"
 
 log() {
     echo -e "$BASENAME_SCRIPT, $1"
@@ -57,6 +59,8 @@ else
         TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_G5
     elif [ $HOSTNAME == $HOSTNAME_L15 ]; then
         TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_L15
+    elif [ $HOSTNAME == $HOSTNAME_P520C ]; then
+        TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_P520C
     else
         log "ERROR - hostname unknown. Exiting script.";
         exit 1;

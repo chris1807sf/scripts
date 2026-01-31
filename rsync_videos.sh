@@ -4,13 +4,14 @@
 #
 # see: https://unix.stackexchange.com/questions/203846/how-to-sync-two-folders-with-command-line-tools
 #
-# version: v2.1
+# version: v2.3
 #
 # history
 # 2025:       v1: initial version
 # 02/08/2025: v2: added default TARGET dir based on HOSTNAME
 # 09/08/2025: V2.1: added chris-g5 as HOSTNAME
-# 10/11/2025: V2.2: added l15 ast HOSTNAME
+# 10/11/2025: V2.2: added l15 as HOSTNAME
+# 31/01/2026: V2.3: added p520c as HOSTNAME
 #
 BASENAME_SCRIPT=$(basename $0)
 HOSTNAME=$(hostname)

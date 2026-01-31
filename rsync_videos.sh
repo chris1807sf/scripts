@@ -1,17 +1,18 @@
 #!/bin/bash
 #
-# rsync new and/or changed video files from ~/Videos to external USB drive T9
+# rsync new and/or changed video files from ~/Videos to external USB drive T9_2
 #
 # see: https://unix.stackexchange.com/questions/203846/how-to-sync-two-folders-with-command-line-tools
 #
-# version: v2.3
+# version: v2.4
 #
 # history
 # 2025:       v1: initial version
 # 02/08/2025: v2: added default TARGET dir based on HOSTNAME
-# 09/08/2025: V2.1: added chris-g5 as HOSTNAME
-# 10/11/2025: V2.2: added l15 as HOSTNAME
-# 31/01/2026: V2.3: added p520c as HOSTNAME
+# 09/08/2025: v2.1: added chris-g5 as HOSTNAME
+# 10/11/2025: v2.2: added l15 as HOSTNAME
+# 03/01/2026: v2.3: changed to use T9_2 USB disk (2TB) by default instead of T9
+# 31/01/2026: V2.4: added p520c as HOSTNAME
 #
 BASENAME_SCRIPT=$(basename $0)
 HOSTNAME=$(hostname)
@@ -28,13 +29,16 @@ HOSTNAME_P520C="p520c"
 
 #dirs and files to use
 SOURCE_DIR="/home/chris/Videos/" #slash needed at the end "all content of ../xxx/ dir"
-TARGET_DIR="/media/chris/T9/media/movies" #"into ../movies dir"
+#TARGET_DIR="/media/chris/T9/media/movies" #"into ../movies dir"
 
-DEFAULT_TARGET_DIR_FOR_THINKPAD="/media/chris/T9/media/movies"
-DEFAULT_TARGET_DIR_FOR_ELITEDESK="/media/chris/T9/media/from_elitedesk"
-DEFAULT_TARGET_DIR_FOR_G5="/media/chris/T9/media/from_g5"
-DEFAULT_TARGET_DIR_FOR_L15="/media/chris/T9/media/from_l15"
-DEFAULT_TARGET_DIR_FOR_P520C="/media/chris/T9/media/from_p520c"
+DEFAULT_TARGET_USB_DISK="T9_2"
+TARGET_USB_DISK="$DEFAULT_TARGET_USB_DISK"
+
+DEFAULT_TARGET_DIR_FOR_THINKPAD="/media/chris/$TARGET_USB_DISK/media/movies"
+DEFAULT_TARGET_DIR_FOR_ELITEDESK="/media/chris/$TARGET_USB_DISK/media/from_elitedesk"
+DEFAULT_TARGET_DIR_FOR_G5="/media/chris/$TARGET_USB_DISK/media/from_g5"
+DEFAULT_TARGET_DIR_FOR_L15="/media/chris/$TARGET_USB_DISK/media/from_l15"
+DEFAULT_TARGET_DIR_FOR_P520C="/media/chris/$TARGET_USB_DISK/media/from_p520c"
 
 log() {
     echo -e "$BASENAME_SCRIPT, $1"

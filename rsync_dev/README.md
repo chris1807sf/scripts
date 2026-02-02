@@ -1,8 +1,10 @@
 # rsync_since.sh  
 - source /media/chris/T9_2/media
 
-- https://serverfault.com/questions/538767/how-to-rsync-files-folders-from-a-specific-date-forward
+- https://serverfault.com/questions/538767/how-to-rsync-files-folders-from-a-specific-date-forward  
 
+
+- https://unix.stackexchange.com/questions/117190/best-way-to-sync-files-copy-only-existing-files-and-only-if-newer-than-target  
 
 
 # More Info:

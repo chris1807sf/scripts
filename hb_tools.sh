@@ -28,11 +28,12 @@ gnome-terminal -- sh -c "bash -c \"btop\""
 #gnome-terminal -- sh -c "bash -c \"zenity --password | sudo -S -- dmesg -wH\""
 zenity --title="password for dmesg" --password | sudo -Sv || fatal "Unable to sudo" #sudo -S: takes password from sdin; -v: put credentials in cache and don't execute a command as sudo
 
-gnome-terminal -- handbrake
+#gnome-terminal -- handbrake
 #nohup gnome-system-monitor &> /dev/null & 
 #nohup handbrake &> /dev/null & 
 
-sudo -- dmesg -wH #use the credentials in the cache (default: credentials kept in the cache for 15min)
+gnome-terminal -- "$SCRIPTS_DIR/hb_tail.sh"
+sudo -- dmesg -wT #use the credentials in the cache (default: credentials kept in the cache for 15min)
 
 #when stopping dmesg --> kill the terminal process
 echo -e "About to kill the terminal process."

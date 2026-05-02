@@ -34,6 +34,9 @@ SOURCE_DIR="/home/chris/Videos/" #slash needed at the end "all content of ../xxx
 DEFAULT_TARGET_USB_DISK="T9_2"
 TARGET_USB_DISK="$DEFAULT_TARGET_USB_DISK"
 
+TARGET_MOUNT_PATH="/media/$USER/$TARGET_USB_DISK" #expecting: /media/chris/T9_2 as mount path under Ubuntu 24.04, for user chris, and usb disk with label T9_2, that got auto-mounted
+
+
 DEFAULT_TARGET_DIR_FOR_THINKPAD="/media/chris/$TARGET_USB_DISK/media/movies"
 DEFAULT_TARGET_DIR_FOR_ELITEDESK="/media/chris/$TARGET_USB_DISK/media/from_elitedesk"
 DEFAULT_TARGET_DIR_FOR_G5="/media/chris/$TARGET_USB_DISK/media/from_g5"
@@ -82,6 +85,19 @@ fi
 log "exec: rsync -avuh --partial --progress $SOURCE_DIR $TARGET_DIR"
 rsync -avuh --partial --progress $SOURCE_DIR $TARGET_DIR
 
+#check if the $TARGET_MOUNT_PATH exists
+if [ ! -d "$TARGET_MOUNT_PATH" ]; then
+    log "ERROR - TARGET_MOUNT_PATH: $TARGET_MOUNT_PATH does not exist. Exiting script."; exit 1;
+fi
+
+#do sync
+log "exec: sync"
+sync
+
+#do umount
+log "exec: umount $TARGET_MOUNT_PATH"
+umount "$TARGET_MOUNT_PATH"
+log "-- Done --"
 
 # More Info:
 #

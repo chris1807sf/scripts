@@ -13,11 +13,13 @@
 # 10/11/2025: v2.2: added l15 as HOSTNAME
 # 03/01/2026: v2.3: changed to use T9_2 USB disk (2TB) by default instead of T9
 # 31/01/2026: V2.4: added p520c as HOSTNAME
+# 06/06/2026: V2.5: added parsing commandline options, including -n|--no-umount to skip unmounting T9_2 && removed setting TARGET_DIR to the first commandline option ($1)
 #
 BASENAME_SCRIPT=$(basename $0)
 HOSTNAME=$(hostname)
 VERBOSE=false
 HELP=false
+NO_UMOUNT=false #do umount at the end
 DO_EXECUTE=false #do not execute the tar command
 
 #hostname of machines
@@ -47,37 +49,57 @@ log() {
     echo -e "$BASENAME_SCRIPT, $1"
 }
 
+help() {
+    echo -e "\n$0 usage:"
+    echo -e "\t$0 [-v|--verbose -h|--help -n|--no-umount]"
+    echo -e "\nTo sync all files from ~/Videos to $TARGET_USB_DISK USB disk."
+    echo -e "\nBy default the USB disk will be unmounted after the rsync finished."
+    echo -e "Give as option -n|--no-umount to NOT unmount the usb disk after the rsync."
+}
+
 log "--started"
 
+OPTS=`getopt -o vhn --long verbose,help,no-umount -n 'parse-options' -- "$@"`
 
-# if there is a $1 then overwrite TARGET_DIR with it
-#check if there is a $1 given as input
-if [ ! "$1" == "" ] ; then
-    log "info: input param \$1 to set the TARGET_DIR is present and will be used."
-    TARGET_DIR=$1
+if [ $? != 0 ] ; then log "Failed parsing options." >&2 ; help ; exit 1 ; fi
+
+#echo "$OPTS"
+eval set -- "$OPTS" #parses the string returned by getopt and puts them in positional params $1 $2 ...
+
+while true; do
+  case "$1" in
+    -v | --verbose ) VERBOSE=true; shift ;;
+    -h | --help )    HELP=true; help ; exit 0 ;;
+    -n | --no-umount )    NO_UMOUNT=true; shift ;;
+    -- ) shift; break ;;
+    * ) break ;;
+  esac
+done
+
+
+
+#Determine TARGET_DIR based on HOSTNAME
+log "info: will try to determine TARGET_DIR based on the HOSTNAME."
+log "info: HOSTNAME seen is: $HOSTNAME"
+if [ $HOSTNAME == $HOSTNAME_THINKPAD ]; then
+    TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_THINKPAD
+elif [ $HOSTNAME == $HOSTNAME_ELITEDESK ]; then
+    TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_ELITEDESK
+elif [ $HOSTNAME == $HOSTNAME_G5 ]; then
+    TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_G5
+elif [ $HOSTNAME == $HOSTNAME_L15 ]; then
+    TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_L15
+elif [ $HOSTNAME == $HOSTNAME_P520C ]; then
+    TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_P520C
 else
-    log "info: input param \$1 to set the TARGET_DIR is NOT present."
-    log "info: will try to determine TARGET_DIR based on the HOSTNAME."
-    log "info: HOSTNAME seen is: $HOSTNAME"
-    if [ $HOSTNAME == $HOSTNAME_THINKPAD ]; then
-        TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_THINKPAD
-    elif [ $HOSTNAME == $HOSTNAME_ELITEDESK ]; then
-        TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_ELITEDESK
-    elif [ $HOSTNAME == $HOSTNAME_G5 ]; then
-        TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_G5
-    elif [ $HOSTNAME == $HOSTNAME_L15 ]; then
-        TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_L15
-    elif [ $HOSTNAME == $HOSTNAME_P520C ]; then
-        TARGET_DIR=$DEFAULT_TARGET_DIR_FOR_P520C
-    else
-        log "ERROR - hostname unknown. Exiting script.";
-        exit 1;
-    fi
+    log "ERROR - hostname unknown. Exiting script.";
+    exit 1;
 fi
+
 
 log "TARGET_DIR = $TARGET_DIR"
 
-#check if the $TARGET_DIR already exists
+#check if the $TARGET_DIR exists
 if [ ! -d "$TARGET_DIR" ]; then
     log "ERROR - TARGET_DIR: $TARGET_DIR does not exist. Exiting script."; exit 1;
 fi
@@ -94,9 +116,15 @@ fi
 log "exec: sync"
 sync
 
-#do umount
-log "exec: umount $TARGET_MOUNT_PATH"
-umount "$TARGET_MOUNT_PATH"
+#do umount if NO_UMOUNT is set to false
+if ! $NO_UMOUNT ; then
+    log "NO_UMOUNT is false"
+    log "exec: umount $TARGET_MOUNT_PATH"
+    umount "$TARGET_MOUNT_PATH"
+else
+    log "NO_UMOUNT is true, will NOT umount the USB disk"
+fi
+
 log "-- Done --"
 
 # More Info:

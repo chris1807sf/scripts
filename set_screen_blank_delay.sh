@@ -21,7 +21,7 @@ is_uint32() { #check that value is a valid uint32, being >=0 and <="max_uint32 =
     local val="$1"
 
     #  check that all chars are digits, #see: https://unix.stackexchange.com/questions/151654/checking-if-an-input-number-is-an-integer
-    #  check that number of digits is less than 10 --> to handle 64-bit overflow
+    #  check that number of digits is less than 10 --> to handle 64-bit overflow, and max_uint32 needs 10 digits
     #  check that it is smaller then max_uint32 = 2**32 - 1
     if [[ $val == +([[:digit:]]) && ${#val} -le 10 ]] && (( val <= (2**32 - 1) )); then
         return 0 # valid uint32

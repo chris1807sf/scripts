@@ -12,5 +12,8 @@
 #	screen -r backup
 #
 #
-rsync -rtv --modify-window=2 --info=progress2 --no-inc-recursive /media/chris/T9_2/ /media/chris/Elements/
+BASENAME_SCRIPT=$(basename $0)
+
+rsync -rtv --modify-window=2 --info=progress2 --no-inc-recursive --log-file="$HOME/temp/$BASENAME_SCRIPT.log" /media/chris/T9_2/ /media/chris/Elements/
+
 

@@ -14,6 +14,7 @@
 # 03/01/2026: v2.3: changed to use T9_2 USB disk (2TB) by default instead of T9
 # 31/01/2026: V2.4: added p520c as HOSTNAME
 # 06/06/2026: V2.5: added parsing commandline options, including -n|--no-umount to skip unmounting T9_2 && removed setting TARGET_DIR to the first commandline option ($1)
+# 01/10/2026: V2.5: chnage drive to rsync from T9_2 ro Elements
 #
 BASENAME_SCRIPT=$(basename $0)
 HOSTNAME=$(hostname)
@@ -33,7 +34,8 @@ HOSTNAME_P520C="p520c"
 SOURCE_DIR="/home/chris/Videos/" #slash needed at the end "all content of ../xxx/ dir"
 #TARGET_DIR="/media/chris/T9/media/movies" #"into ../movies dir"
 
-DEFAULT_TARGET_USB_DISK="T9_2"
+#DEFAULT_TARGET_USB_DISK="T9_2"
+DEFAULT_TARGET_USB_DISK="Elements"
 TARGET_USB_DISK="$DEFAULT_TARGET_USB_DISK"
 
 TARGET_MOUNT_PATH="/media/$USER/$TARGET_USB_DISK" #expecting: /media/chris/T9_2 as mount path under Ubuntu 24.04, for user chris, and usb disk with label T9_2, that got auto-mounted

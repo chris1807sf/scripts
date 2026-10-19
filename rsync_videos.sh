@@ -15,6 +15,7 @@
 # 31/01/2026: V2.4: added p520c as HOSTNAME
 # 06/06/2026: V2.5: added parsing commandline options, including -n|--no-umount to skip unmounting T9_2 && removed setting TARGET_DIR to the first commandline option ($1)
 # 01/10/2026: V2.5: chnage drive to rsync from T9_2 ro Elements
+# 19/10/2026: V2.6_dev: ongpoing development to do a rsync since
 #
 BASENAME_SCRIPT=$(basename $0)
 HOSTNAME=$(hostname)
